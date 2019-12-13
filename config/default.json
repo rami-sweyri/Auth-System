@@ -1,0 +1,5 @@
+{
+  "jwtPrivateKey": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, TOP SECRIT AND PRIVET",
+  "mongoURI": "mongodb://rami:r123456@ds249127.mlab.com:49127/tasyyr",
+  "sendgridKey":"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"
+}
