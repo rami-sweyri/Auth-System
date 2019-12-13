@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken');
 
 // Create Schema
 const UserSchema = new Schema({
-    email: {type: String, required: true, unique: true, match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/},
+    email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    userName: {type: String, required: true},
-    phoneNumber: {type: String, required: true, default: ''},
+    userName: {type: String, required: true, unique: true},
+    phoneNumber: {type: String, required: true, unique: true},
     emailVerified: {type: Boolean, default: false},
     verifyCodeExpiration: Date,
     verifyCode: String,

@@ -26,11 +26,12 @@ exports.me = async (req, res, next) => {
 // user login
 exports.login = async (req, res, next) => {
   const { error } = validateLogin(req.body);
-  if (error) return res.status(400).json({msg: error.details[0].msg});
+  if (error) return res.status(400).json({msg: error.details[0].message});
 
-  let user = await User.findOne({ email: req.body.email });
+  // let user = await User.find({ email: req.body.email });
+  let user = await User.findOne({$or:[{email: req.body.email},{phoneNumber: req.body.phoneNumber}, {userName: req.body.userName}]});
   if (!user) return res.status(404).json({msg: 'This user not registered yet!'});
-
+  console.log(user)
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) return res.status(400).json({msg: 'Invalid email or password.'});
 
@@ -42,9 +43,9 @@ exports.login = async (req, res, next) => {
 // register user
 exports.register = async (req, res, next) => {
   const { error } = validateSignup(req.body);
-  if (error) return res.status(400).json({msg: error.details[0].msg});
+  if (error) return res.status(400).json({msg: error.details[0].message});
 
-  let user = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({$or:[{email: req.body.email},{phoneNumber: req.body.phoneNumber}, {userName: req.body.userName}]});
   if (user) return res.status(400).json({msg: 'User already registered.'});
 
   user = new User({
@@ -72,7 +73,7 @@ exports.register = async (req, res, next) => {
             `
         });
   })
-  .catch(err => res.status(400).json(err));
+  .catch(err => res.status(400).json({msg:err}));
 };
 
 // verify by email
